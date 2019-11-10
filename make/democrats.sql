@@ -1,1 +1,0 @@
-SELECT * FROM legislators WHERE party = 'D' AND EXTRACT(YEAR FROM AGE(birthdate)) <= 45
