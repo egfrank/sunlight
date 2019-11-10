@@ -1,19 +1,23 @@
+import pandas as pd
+import argparse 
+
+def determine_age(birthdate):
+    today = pd.Timestamp.today()
+    return int(today.year - birthdate.year - ((today.month, today.day) < (birthdate.month, birthdate.day)))
+
+
+
 if __name__ == "__main__":
 
-    import pandas as pd
-
-    data = pd.read_csv("legislators.csv") 
-
-
-    today = pd.Timestamp.today()
-
-    age = pd.to_datetime(data.birthdate).map(lambda b:
-        int(today.year - b.year - ((today.month, today.day) < (b.month, b.day))
-    ))
-
-    data.insert(8, 'age', age)
+    parser = argparse.ArgumentParser(description='Convert Sunlight csv into two csvs;')
+    parser.add_argument('csv', type=str)
+    args = parser.parse_args()
 
 
+    data = pd.read_csv(args.csv)
+    data.age = pd.to_datetime(data.birthdate).map(determine_age)
+
+    print(data.govtrack_id)
     # First spreadsheet: 
     # All Democrats who are younger than 45 years old 
 
@@ -22,9 +26,9 @@ if __name__ == "__main__":
         (data.age <= 45)
     ]
 
-    print(democrats.head())
-    democrats.to_excel(
-        "young_democrats.xlsx", index=False
+    democrats.to_csv(
+        "./output/young_democrats.csv",
+        index=False
     )
 
     # Second spreadsheet: 
@@ -36,8 +40,9 @@ if __name__ == "__main__":
         data.facebook_id.notnull()
     ]
 
-    print(republicans.head())
-    republicans.to_excel(
-        "tech_savy_republicans.xlsx", index=False
+    republicans.to_csv(
+        "./output/tech_savy_republicans.csv",
+        index=False,
+        float_format='%g'
     )
 
