@@ -18,13 +18,13 @@ if you have git cloned the repo successfully, you should see the source file `ra
 ## Python Approach
 My initial approach was to use Pandas in Python to filter this data. 
 
-*Requirements* You need Python3 installed to run this script. The only Python package we need to install is Pandas, so run
+####Requirements You need Python3 installed to run this script. The only Python package we need to install is Pandas, so run
 ```
 pip install pandas
 ```
 in the commandline. 
 
-*Run the script* Again, from the root directory of the repo run
+####Run the script Again, from the root directory of the repo run
 ```
 python python/transform.py raw/legislators.csv
 ```
@@ -36,7 +36,8 @@ The script should output `python/democrats.csv` and `python/republicans.csv`.
 
 After coding the Python approach, I read the Datamade's Guide to ETL processes with Make and wanted to learn how to write a Makefile. I used Postgresql specifically because one query asked for "All Democrats who are younger than 45 years old," and  Postgresql has a function to calculate age.
 
-*Requirements* If you are running these commands on a Mac, you should have Make already installed. You will need to install Postgresql if it's not already installed. I am a big fan of going to https://postgresapp.com/ and using their app to install Postgres, but you can also use Brew:
+####Requirements 
+If you are running these commands on a Mac, you should have Make already installed. You will need to install Postgresql if it's not already installed. I am a big fan of going to https://postgresapp.com/ and using their app to install Postgres, but you can also use Brew:
 ```
 brew install postgres
 ```
@@ -53,7 +54,7 @@ Finally, to run this Makefile you'll also need to download the Python packages `
 pip install csvkit
 pip install psycopg2
 ```
-*Running the Makefile*
+####Running the Makefile
 
 To create the spreadsheets using the Makefile, run
 ```
@@ -69,7 +70,7 @@ Then if you run `make all` you can be sure you're creating new spreadsheets.
 
 
 
-### Troubleshooting
+## Troubleshooting
 
 If you see an error that looks like 
 ```
@@ -87,7 +88,7 @@ your Postgresql server is probably not on. The instructions for turning on your 
 
 
 
-# Context
+## Context
 
 This was my code sample for the Datamade developer position that opened up Winter 2019. The prompt was:
 ```
