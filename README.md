@@ -18,7 +18,8 @@ if you have git cloned the repo successfully, you should see the source file `ra
 ## Python Approach
 My initial approach was to use Pandas in Python to filter this data. 
 
-#### Requirements You need Python3 installed to run this script. The only Python package we need to install is Pandas, so run
+#### Requirements
+You need Python3 installed to run this script. The only Python package we need to install is Pandas, so run
 ```
 pip install pandas
 ```
@@ -33,8 +34,7 @@ python python/transform.py raw/legislators.csv
 The script should output `python/democrats.csv` and `python/republicans.csv`.
 
 
-## Makefile Approach and Postgresql
-
+## Makefile and Postgresql Approach
 After coding the Python approach, I read [Datamade's Guide to ETL processes with Make](https://github.com/datamade/data-making-guidelines) and wanted to learn how to write a Makefile. I used Postgresql specifically because one query asked for "All Democrats who are younger than 45 years old" and Postgresql has a function to calculate age.
 
 #### Requirements 
