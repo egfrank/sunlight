@@ -16,14 +16,14 @@ if __name__ == "__main__":
 
 
     data = pd.read_csv(args.csv)
-    data.age = pd.to_datetime(data.birthdate).map(determine_age)
+    ages = pd.to_datetime(data.birthdate).map(determine_age)
 
     # First spreadsheet: 
     # All Democrats who are younger than 45 years old 
 
     democrats = data.loc[
         (data.party == 'D') &
-        (data.age <= 45)
+        (ages <= 45)
     ]
 
     democrats.to_csv(
