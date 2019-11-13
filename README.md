@@ -1,7 +1,7 @@
 # Sunlight Foundation ETL Task for Datamade
 
-This repo shows two ways of transforming data from the Sunlight Foundation’s list of legislators in the United States.
-The first method uses Python, the second uses Make and Postgresql.
+This repo contains two methods to tranform a CSV of Sunlight Foundation’s list of legislators in the United States.
+The first method uses Python, and the second uses Make and Postgresql. This repo is a code sample for the [Datamade](https://datamade.us/) [developer position](https://datamade.us/blog/join-the-datamade-team/) that opened up Winter 2019; [click here](#Context) for the original prompt.
 
 To clone this repo using HTTPS, type into the command line
 
@@ -38,17 +38,11 @@ The script should output `python/democrats.csv` and `python/republicans.csv`.
 After coding the Python approach, I read [Datamade's Guide to ETL processes with Make](https://github.com/datamade/data-making-guidelines) and wanted to learn how to write a Makefile. I used Postgresql specifically because one query asked for "All Democrats who are younger than 45 years old" and Postgresql has a function to calculate age.
 
 #### Requirements 
-If you are running these commands on a Mac, you should have Make already installed. You will need to install Postgresql if it's not already installed. I am a big fan of going to https://postgresapp.com/ and using their app to install Postgres, but you can also use Brew:
-```
-brew install postgres
-```
+If you are running these commands on a Mac, you should have Make already installed. You will need to install Postgresql if it's not already installed. I am a big fan of going to https://postgresapp.com/ and using their app to install Postgres. You can also use Brew by running `brew install postgres` in the command line.
 
-Then you need to launch your Postgres server. If you downloaded Postgres via `postgresapp.com`, then you can search for the Postgres GUI and launch it from there. If you downloaded Postgres via Brew, then using the command line run
-```
-brew services start postgresql
-```
+Then you need to launch your Postgres server. If you downloaded Postgres via https://postgresapp.com/, then you can search for the Postgres GUI (for Mac I use Spotlight and type in Postgres) and launch it from there. If you downloaded Postgres via Brew, then using the command line run `brew services start postgresql`.
 
-Then, edit the file `config.mk`, changing the first three lines so the Makefile can connect to your Postgres server. If you downloaded Postgres via  `postgresapp.com` you probably will only need to change the second line, the PG_USER, and it should be your system username.
+Then, edit the file `config.mk`, changing the first three lines so the Makefile can connect to your Postgres server. If you downloaded Postgres via https://postgresapp.com/ you probably will only need to change the second line, the PG_USER, and it should be your system username.
 
 Finally, to run this Makefile you'll also need to download the Python packages `csvkit` and `psycopg2` 
 ```
@@ -75,7 +69,7 @@ Then if you run `make all` you can be sure you're creating new spreadsheets.
 
 If you see an error that looks like 
 ```
-"psql: FATAL:  role "*PLEASE_FILL_IN*" does not exist"
+"psql: FATAL:  role "elliotgoldingfrank" does not exist"
 ```
 go into `config.mk` and change the PG_USER variable to your chosen Postgresql username
 
@@ -85,19 +79,22 @@ psql: could not connect to server: No such file or directory
      Is the server running locally and accepting
      connections on Unix domain socket "/tmp/.s.PGSQL.5432"?
 ```
-your Postgresql server is probably not on. The instructions for turning on your Postgresql server were included in the Makefile section under *Requirements*.
+your Postgresql server is probably stopped. The instructions for starting your Postgresql server were included in the Makefile section under **Requirements**.
 
+Finally, the Makefile uses the commands `psql`, the command line tool for Postgres, and `csvsql`, a command line tool that should be installed with `csvkit`. If you are having unusual errors running `make all`, you should double check that have both command line tools installed by running `psql --help` and `csvsql --help`.
 
 
 ## Context
 
-This was my code sample for the [Datamade developer position that opened up Winter 2019](https://datamade.us/blog/join-the-datamade-team/). The [prompt](https://docs.google.com/document/d/11_WSplUs2rX2Tw8a-Oko0uHW3fGtWAD3c7gIhmQeB64/edit) was:
-```
-1. Spreadsheet manipulation
-Download the Sunlight Foundation’s list of legislators in the United States. Write a script that reads the spreadsheet as input, filters the rows based on specific criteria, and writes two spreadsheets as output. The criteria for the two spreadsheets should be:
+This repo was my code sample for the [Datamade developer position that opened up Winter 2019](https://datamade.us/blog/join-the-datamade-team/). The [prompt](https://docs.google.com/document/d/11_WSplUs2rX2Tw8a-Oko0uHW3fGtWAD3c7gIhmQeB64/edit) was:
 
-First spreadsheet: All Democrats who are younger than 45 years old
-Second spreadsheet: All Republicans who have Twitter accounts and YouTube channels
 
-For each row in the output, make sure to keep all of the columns from the original data source.
-```
+> **1. Spreadsheet manipulation**
+
+> Download the Sunlight Foundation’s list of legislators in the United States. Write a script that reads the spreadsheet as input, filters the rows based on specific criteria, and writes two spreadsheets as output. The criteria for the two spreadsheets should be:
+
+> First spreadsheet: All Democrats who are younger than 45 years old
+
+> Second spreadsheet: All Republicans who have Twitter accounts and YouTube channels
+
+> For each row in the output, make sure to keep all of the columns from the original data source.
